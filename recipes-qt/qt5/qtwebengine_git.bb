@@ -147,6 +147,8 @@ SRC_URI += " \
     file://0001-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch;patchdir=src/3rdparty \
     file://0002-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
     file://0003-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
+    file://0004-chromium-Linux-video-capture-add-support-for-MPLANE-.patch;patchdir=src/3rdparty \
+    file://0005-chromium-media-limit-supported-formats-to-UYVY.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\
