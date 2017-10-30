@@ -145,6 +145,9 @@ SRC_URI += " \
     file://chromium/0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0003-chromium-Fix-build-with-gcc8.patch;patchdir=src/3rdparty \
     file://chromium/0004-chromium-Fix-build-with-GCC-8.1.0.patch;patchdir=src/3rdparty \
+    file://chromium/1000-media-capture-register-new-type-LINUX_V4L2_MULTI_PLA.patch;patchdir=src/3rdparty \
+    file://chromium/1001-media-capture-Add-support-for-V4L2-MPLANE-devices.patch;patchdir=src/3rdparty \
+    file://chromium/1002-chromium-media-limit-supported-formats-to-UYVY.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\

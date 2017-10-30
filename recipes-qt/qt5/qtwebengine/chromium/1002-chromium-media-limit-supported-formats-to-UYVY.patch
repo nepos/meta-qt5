@@ -1,0 +1,46 @@
+From 0cdfdd09fc846478ab6b16f08543140f2270a280 Mon Sep 17 00:00:00 2001
+From: Daniel Mack <zonque@gmail.com>
+Date: Fri, 15 Jun 2018 12:21:43 +0200
+Subject: [PATCH] chromium: media: limit supported formats to UYVY
+
+The cammss drivers fails if anything else is used, even though it reports
+support for others.
+---
+ media/capture/video/linux/v4l2_capture_delegate.cc | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/chromium/media/capture/video/linux/v4l2_capture_delegate.cc b/chromium/media/capture/video/linux/v4l2_capture_delegate.cc
+index 7da5213..a6267e2 100644
+--- a/chromium/media/capture/video/linux/v4l2_capture_delegate.cc
++++ b/chromium/media/capture/video/linux/v4l2_capture_delegate.cc
+@@ -62,22 +62,22 @@ static struct {
+   VideoPixelFormat pixel_format;
+   size_t num_planes;
+ } const kSupportedFormatsAndPlanarity[] = {
+-    {V4L2_PIX_FMT_YUV420, PIXEL_FORMAT_I420, 1},
+-    {V4L2_PIX_FMT_Y16, PIXEL_FORMAT_Y16, 1},
+-    {V4L2_PIX_FMT_Z16, PIXEL_FORMAT_Y16, 1},
+-    {V4L2_PIX_FMT_INVZ, PIXEL_FORMAT_Y16, 1},
+-    {V4L2_PIX_FMT_YUYV, PIXEL_FORMAT_YUY2, 1},
++  //  {V4L2_PIX_FMT_YUV420, PIXEL_FORMAT_I420, 1},
++  //  {V4L2_PIX_FMT_Y16, PIXEL_FORMAT_Y16, 1},
++  //  {V4L2_PIX_FMT_Z16, PIXEL_FORMAT_Y16, 1},
++  //  {V4L2_PIX_FMT_INVZ, PIXEL_FORMAT_Y16, 1},
++  //  {V4L2_PIX_FMT_YUYV, PIXEL_FORMAT_YUY2, 1},
+     {V4L2_PIX_FMT_UYVY, PIXEL_FORMAT_UYVY, 1},
+-    {V4L2_PIX_FMT_RGB24, PIXEL_FORMAT_RGB24, 1},
++//    {V4L2_PIX_FMT_RGB24, PIXEL_FORMAT_RGB24, 1},
+     // MJPEG is usually sitting fairly low since we don't want to have to
+     // decode. However, it is needed for large resolutions due to USB bandwidth
+     // limitations, so GetListOfUsableFourCcs() can duplicate it on top, see
+     // that method.
+-    {V4L2_PIX_FMT_MJPEG, PIXEL_FORMAT_MJPEG, 1},
++//    {V4L2_PIX_FMT_MJPEG, PIXEL_FORMAT_MJPEG, 1},
+     // JPEG works as MJPEG on some gspca webcams from field reports, see
+     // https://code.google.com/p/webrtc/issues/detail?id=529, put it as the
+     // least preferred format.
+-    {V4L2_PIX_FMT_JPEG, PIXEL_FORMAT_MJPEG, 1},
++//    {V4L2_PIX_FMT_JPEG, PIXEL_FORMAT_MJPEG, 1},
+ };
+ 
+ // Maximum number of ioctl retries before giving up trying to reset controls.

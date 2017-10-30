@@ -1,0 +1,74 @@
+From cb4eb8bc7027f1e25c90f3690d7eaf91efc16133 Mon Sep 17 00:00:00 2001
+From: Daniel Mack <zonque@gmail.com>
+Date: Sat, 28 Oct 2017 12:46:09 +0200
+Subject: [PATCH] media/capture: register new type LINUX_V4L2_MULTI_PLANE
+
+This new type will be used for multiplanar video devices exposed by the V4L2
+Linux kernel API.
+---
+ media/capture/mojo/video_capture_types.mojom            | 1 +
+ media/capture/mojo/video_capture_types_struct_traits.cc | 5 +++++
+ media/capture/video/video_capture_device_descriptor.cc  | 2 ++
+ media/capture/video/video_capture_device_descriptor.h   | 1 +
+ 4 files changed, 9 insertions(+)
+
+diff --git a/chromium/media/capture/mojo/video_capture_types.mojom b/chromium/media/capture/mojo/video_capture_types.mojom
+index 0e85e64..06dd963 100644
+--- a/chromium/media/capture/mojo/video_capture_types.mojom
++++ b/chromium/media/capture/mojo/video_capture_types.mojom
+@@ -28,6 +28,7 @@ enum VideoPixelStorage {
+ 
+ enum VideoCaptureApi {
+   LINUX_V4L2_SINGLE_PLANE,
++  LINUX_V4L2_MULTI_PLANE,
+   WIN_MEDIA_FOUNDATION,
+   WIN_DIRECT_SHOW,
+   MACOSX_AVFOUNDATION,
+diff --git a/chromium/media/capture/mojo/video_capture_types_struct_traits.cc b/chromium/media/capture/mojo/video_capture_types_struct_traits.cc
+index 30f347c..e161ce0 100644
+--- a/chromium/media/capture/mojo/video_capture_types_struct_traits.cc
++++ b/chromium/media/capture/mojo/video_capture_types_struct_traits.cc
+@@ -106,6 +106,8 @@ EnumTraits<media::mojom::VideoCaptureApi, media::VideoCaptureApi>::ToMojom(
+   switch (input) {
+     case media::VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE:
+       return media::mojom::VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE;
++    case media::VideoCaptureApi::LINUX_V4L2_MULTI_PLANE:
++      return media::mojom::VideoCaptureApi::LINUX_V4L2_MULTI_PLANE;
+     case media::VideoCaptureApi::WIN_MEDIA_FOUNDATION:
+       return media::mojom::VideoCaptureApi::WIN_MEDIA_FOUNDATION;
+     case media::VideoCaptureApi::WIN_DIRECT_SHOW:
+@@ -139,6 +141,9 @@ bool EnumTraits<media::mojom::VideoCaptureApi, media::VideoCaptureApi>::
+     case media::mojom::VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE:
+       *output = media::VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE;
+       return true;
++    case media::mojom::VideoCaptureApi::LINUX_V4L2_MULTI_PLANE:
++      *output = media::VideoCaptureApi::LINUX_V4L2_MULTI_PLANE;
++      return true;
+     case media::mojom::VideoCaptureApi::WIN_MEDIA_FOUNDATION:
+       *output = media::VideoCaptureApi::WIN_MEDIA_FOUNDATION;
+       return true;
+diff --git a/chromium/media/capture/video/video_capture_device_descriptor.cc b/chromium/media/capture/video/video_capture_device_descriptor.cc
+index b5a34f3..a94a9b0 100644
+--- a/chromium/media/capture/video/video_capture_device_descriptor.cc
++++ b/chromium/media/capture/video/video_capture_device_descriptor.cc
+@@ -63,6 +63,8 @@ const char* VideoCaptureDeviceDescriptor::GetCaptureApiTypeString() const {
+   switch (capture_api) {
+     case VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE:
+       return "V4L2 SPLANE";
++    case VideoCaptureApi::LINUX_V4L2_MULTI_PLANE:
++      return "V4L2 MPLANE";
+     case VideoCaptureApi::WIN_MEDIA_FOUNDATION:
+       return "Media Foundation";
+     case VideoCaptureApi::WIN_DIRECT_SHOW:
+diff --git a/chromium/media/capture/video/video_capture_device_descriptor.h b/chromium/media/capture/video/video_capture_device_descriptor.h
+index 465c5f6..82d7db0 100644
+--- a/chromium/media/capture/video/video_capture_device_descriptor.h
++++ b/chromium/media/capture/video/video_capture_device_descriptor.h
+@@ -18,6 +18,7 @@ namespace media {
+ // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.media
+ enum class VideoCaptureApi {
+   LINUX_V4L2_SINGLE_PLANE,
++  LINUX_V4L2_MULTI_PLANE,
+   WIN_MEDIA_FOUNDATION,
+   WIN_DIRECT_SHOW,
+   MACOSX_AVFOUNDATION,
