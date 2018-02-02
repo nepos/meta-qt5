@@ -57,6 +57,7 @@ PACKAGECONFIG[speex] = "WEBENGINE_CONFIG+=use_system_speex,,speex"
 PACKAGECONFIG[vpx] = "WEBENGINE_CONFIG+=use_system_vpx,,libvpx"
 PACKAGECONFIG[webrtc] = "WEBENGINE_CONFIG+=use_webrtc,,libvpx"
 PACKAGECONFIG[nss] = "WEBENGINE_CONFIG+=use_nss,,nss"
+PACKAGECONFIG[proprietary_codecs] = "WEBENGINE_CONFIG+=use_proprietary_codecs,,"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
